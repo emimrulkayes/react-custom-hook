@@ -1,10 +1,37 @@
+import { useOnlineStatus } from './useOnlineStatus.js';
 
-function App() {
+
+function StatusBar() {
+  const isOnline = useOnlineStatus();
+  return <h2> {isOnline ? '✅ Online' : '❌ Disconnected'} </h2>
+}
+
+function SaveButton() {
+  const isOnline = useOnlineStatus();
+   
+  function handleSaveClick() {
+    console.log('✅ Progress saved.');
+  }
+
   return (
-    <div>
-      <h2>Create react custom hook.</h2>
-    </div>
+    <button disabled={!isOnline} onClick={handleSaveClick}>
+      {isOnline ? 'Save progress' : 'Reconnecting...'}
+    </button>
   );
 }
 
-export default App;
+
+export default function App() {
+  return (
+    <>
+      <SaveButton></SaveButton>
+      <StatusBar></StatusBar>
+    
+    </>
+  )
+}
+
+
+
+
+
